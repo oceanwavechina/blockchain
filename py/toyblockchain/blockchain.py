@@ -161,6 +161,8 @@ class BlockChain(object):
         :param last_proof: <int> Previous Proof
         :param proof: <int> Current Proof
         :return: <bool> True if correct, False if not.
+
+        这里还要用到上一次的proof，所以我们没办法复用我们之前的proof，这就保证了每次重新计算
         """
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
@@ -173,6 +175,8 @@ class BlockChain(object):
          - p is the previous proof, and p' is the new proof
         :param last_proof: <int>
         :return: <int>
+
+        这个是 共识机制 中的一种 POW (proof of work), DPOS(Delegated Proof of Stake)
         """
         proof = 0
         while self.valid_proof(last_proof, proof) is False:
